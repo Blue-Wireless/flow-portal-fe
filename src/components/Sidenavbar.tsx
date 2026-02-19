@@ -1,10 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import bwLogo from '../assets/bw-logo-white.png';
+import overviewIcon from '../assets/rectangles-mixed.svg';
+import deviceMgtIcon from '../assets/laptop-mobile.svg';
+import analyticsIcon from '../assets/file-chart-column-svg.svg';
+import locationTrackingIcon from '../assets/location-crosshairs.svg';
+import billingIcon from '../assets/file-invoice.svg';
+import accountSettingsIcon from '../assets/screwdriver-wrench.svg';
+import supportIcon from '../assets/headset.svg';
+import userIcon from '../assets/user.svg';
+import logoutIcon from '../assets/right-from-bracket.svg';
 
 const linkBase =
-  'block rounded px-3 py-2 text-base transition-colors duration-150';
+  'flex gap-2 items-center block rounded px-3 py-2 text-base transition-colors duration-150';
 
-const linkClass = ({ isActive }: { isActive: boolean }) => {
+const linkClass = ({ isActive }: any) => {
   return isActive
     ? `${linkBase} bg-[#C6EDFB] text-black hover:text-black`
     : `${linkBase} text-[#E3E8ED] hover:bg-[#126DB6] font-normal`;
@@ -12,8 +21,34 @@ const linkClass = ({ isActive }: { isActive: boolean }) => {
 
 const disabledClass = `${linkBase} text-[#B9C1CB] cursor-not-allowed`;
 const navHeaderClass =
-  'mb-2 mt-2 text-[#B9C1CB] text-xs uppercase tracking-wide';
-const dividerClass = 'mx-4 border-b border-[#B9C1CB]';
+  'mb-2 mt-2 px-3 text-[#B9C1CB] text-xs uppercase tracking-wide';
+const dividerClass = 'mx-1 border-b border-[#B9C1CB]';
+
+type NavItemProps = {
+  icon: string;
+  label: string;
+  to?: string;
+  end?: boolean;
+  disabled?: boolean;
+};
+
+const NavItem = ({ icon, label, to, end, disabled }: NavItemProps) => {
+  if (disabled || !to) {
+    return (
+      <span className={disabledClass}>
+        <img src={icon} alt="" className="opacity-60" />
+        <span>{label}</span>
+      </span>
+    );
+  } else {
+    return (
+      <NavLink to={to} end={end} className={linkClass}>
+        <img src={icon} alt=""  />
+        <span>{label}</span>
+      </NavLink>
+    );
+  }
+};
 
 const Sidenavbar = () => {
   return (
@@ -24,35 +59,44 @@ const Sidenavbar = () => {
 
       <div className={dividerClass} />
 
-      <nav className="p-4 space-y-3 flex-1">
+      <nav className="p-1 space-y-3 flex-1">
         <div>
           <div className={navHeaderClass}>Manage</div>
-          <NavLink to="/app" end className={linkClass}>
-            Overview
-          </NavLink>
-          <NavLink to="/app/device-management" className={linkClass}>
-            Device management
-          </NavLink>
+          <NavItem icon={overviewIcon} label="Overview" to="/app" end />
+          <NavItem
+            icon={deviceMgtIcon}
+            label="Device management"
+            to="/app/device-management"
+          />
 
           <div className={navHeaderClass}>Review</div>
-          <span className={disabledClass}>Analytics</span>
-          <span className={disabledClass}>Location tracking</span>
-          <span className={disabledClass}>Billing</span>
+          <NavItem icon={analyticsIcon} label="Analytics" disabled />
+          <NavItem
+            icon={locationTrackingIcon}
+            label="Location tracking"
+            disabled
+          />
+          <NavItem icon={billingIcon} label="Billing" disabled />
 
           <div className={navHeaderClass}>Admin</div>
-          <span className={disabledClass}>Account settings</span>
-          <span className={disabledClass}>Support</span>
+
+          <NavItem
+            icon={accountSettingsIcon}
+            label="Account settings"
+            disabled
+          />
+          <NavItem icon={supportIcon} label="Support" disabled />
         </div>
       </nav>
 
       <div className={dividerClass} />
 
-      <nav className="p-4 space-y-3">
-        <span className={disabledClass}>Account</span>
-        <span className={disabledClass}>Logout</span>
+      <nav className="p-1 space-y-3">
+        <NavItem icon={userIcon} label="User" disabled />
+        <NavItem icon={logoutIcon} label="Logout" disabled />
       </nav>
     </aside>
   );
-}
+};
 
 export default Sidenavbar;
