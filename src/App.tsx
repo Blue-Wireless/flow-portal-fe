@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Sidenavbar from './components/Sidenavbar';
 
-export default function App() {
+const App = () => {
   return (
     <div className="min-h-screen flex">
       <Sidenavbar />
@@ -15,4 +15,6 @@ export default function App() {
       </main>
     </div>
   );
-}
+};
+
+export default App;

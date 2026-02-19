@@ -15,7 +15,7 @@ const navHeaderClass =
   'mb-2 mt-2 text-[#B9C1CB] text-xs uppercase tracking-wide';
 const dividerClass = 'mx-4 border-b border-[#B9C1CB]';
 
-export default function Sidenavbar() {
+const Sidenavbar = () => {
   return (
     <aside className="w-68 p-1 border-r bg-[#1580D4] text-white flex flex-col">
       <div className="h-24 flex items-center justify-center">
@@ -54,3 +54,5 @@ export default function Sidenavbar() {
     </aside>
   );
 }
+
+export default Sidenavbar;

@@ -1,9 +1,9 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
-import { OverviewPage } from "./pages/OverviewPage.tsx";
-import { DeviceManagementPage } from "./pages/DeviceManagementPage.tsx";
+import OverviewPage from "./pages/OverviewPage.tsx";
+import DeviceManagementPage from "./pages/DeviceManagementPage.tsx";
 
-function NotFound() {
+const NotFound = () => {
   return <div className="p-6">404 - Not Found</div>;
 }
 
