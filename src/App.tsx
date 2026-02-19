@@ -7,8 +7,11 @@ export default function App() {
       <Sidenavbar />
 
       {/* Page content */}
-      <main className="flex-1 min-w-0 p-6">
-        <Outlet />
+      <main className="flex-1 min-w-0">
+        {/* Content wrapper */}
+        <div className="mx-auto w-full max-w-[1240px] px-4 py-6 sm:px-6">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
