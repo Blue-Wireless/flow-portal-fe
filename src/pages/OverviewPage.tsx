@@ -7,6 +7,10 @@ import calenderIcon from '../assets/calendar.svg';
 import globeIcon from '../assets/globe.svg';
 import satelliteIcon from '../assets/satellite.svg';
 import usersIcon from '../assets/users.svg';
+import StatisticCard from '../components/StatisticCard';
+import customersBgImg from '../assets/bg-users.svg';
+import devicesBgImg from '../assets/bg-laptop-mobile.svg';
+import networkBgImg from '../assets/bg-wifi.svg';
 
 const OverviewPage = () => {
   const [query, setQuery] = useState('');
@@ -78,8 +82,39 @@ const OverviewPage = () => {
 
       <div className={dividerClass} />
 
-      {/* TODO Filter components */}
       <DashboardFilter filters={filterConfigs} onChange={handleFilterChange} />
+
+      <div className={dividerClass} />
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <StatisticCard
+          title="Customers"
+          image={customersBgImg}
+          fields={[
+            { label: 'Total', value: 60 },
+            { label: 'Active', value: 52 },
+            { label: 'Avg devices/ customer', value: 15.2, unit: 'Mbps' },
+          ]}
+        />
+        <StatisticCard
+          title="Devices"
+          image={devicesBgImg}
+          fields={[
+            { label: 'Total', value: 112 },
+            { label: 'Online', value: 95 },
+            { label: 'Offline', value: 30 },
+          ]}
+        />
+        <StatisticCard
+          title="Network health"
+          image={networkBgImg}
+          fields={[
+            { label: 'Uptime', value: 67, unit: '%' },
+            { label: 'Avg signal strength', value: 60, unit: '%' },
+            { label: 'Issues resolved', value: 99.8, unit: '%' },
+          ]}
+        />
+      </div>
     </div>
   );
 };
