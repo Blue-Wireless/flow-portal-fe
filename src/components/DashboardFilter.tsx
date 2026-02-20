@@ -1,4 +1,3 @@
-import React from 'react';
 import chevronDown from '../assets/chevron-down.svg';
 
 export type FilterOption = {
