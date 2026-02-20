@@ -21,7 +21,7 @@ type Props = {
 
 const DashboardFilter = ({ filters, onChange }: Props) => {
   return (
-    <div className="flex flex-row gap-2 items-center">
+    <div className="flex flex-row gap-2 items-center font-exo">
       <span className="text-xs text-[#434A56] font-bold">Filters:</span>
       {filters.map((filter) => (
         <div key={filter.id} className="group relative">
@@ -37,7 +37,7 @@ const DashboardFilter = ({ filters, onChange }: Props) => {
             id={filter.id}
             value={filter.value}
             onChange={(e) => onChange(filter.id, e.target.value)}
-            className="w-full cursor-pointer appearance-none rounded-sm border border-[#227D9B] bg-white px-3 py-2 pr-10 pl-7 text-sm text-[#227D9B] font-medium shadow-m outline-none transition-all hover:ring-1 focus:border-[#1580D4] focus:ring-1 focus:ring[#1580D4]/20 disabled:bg-slate-50 disabled:text-slate-400"
+            className="w-full cursor-pointer appearance-none rounded-sm border border-[#227D9B] bg-white px-3 py-2 pr-10 pl-7 text-sm text-[#227D9B] font-bold shadow-m outline-none transition-all hover:ring-1 focus:border-[#1580D4] focus:ring-1 focus:ring[#1580D4]/20 disabled:bg-slate-50 disabled:text-slate-400"
           >
             {filter.options.map((option) => (
               <option key={option.value} value={option.value}>

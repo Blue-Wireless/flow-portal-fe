@@ -12,7 +12,7 @@ export type Props = {
 
 const StatisticCard = ({ title, image, fields }: Props) => {
   return (
-    <div className="relative overflow-hidden rounded-lg bg-[#164555] p-4 shadow-sm">
+    <div className="relative overflow-hidden font-exo rounded-lg bg-[#164555] p-4 shadow-sm">
       {image && (
         <img
           src={image}
@@ -21,12 +21,12 @@ const StatisticCard = ({ title, image, fields }: Props) => {
         />
       )}
       <div className="relative z-10">
-        <div className="text-lg font-medium text-[#E3E8ED]">{title}</div>
+        <div className="text-2xl font-medium text-[#E3E8ED]">{title}</div>
         <div className="mt-4 grid grid-cols-3 grid-rows-2 gap-y-2 gap-x-2 text-center">
           {fields.map((field) => (
             <div
               key={`${field.label}-label`}
-              className="text-xs text-[#E3E8ED] uppercase"
+              className="text-base font-light text-[#E3E8ED] uppercase"
             >
               {field.label}
             </div>
@@ -36,11 +36,11 @@ const StatisticCard = ({ title, image, fields }: Props) => {
               key={`${field.label}-value`}
               className="mt-2 flex items-baseline justify-center"
             >
-              <span className="text-2xl font-medium text-[#E3E8ED]">
+              <span className="text-3xl font-semibold text-[#E3E8ED]">
                 {field.value}
               </span>
               {field.unit && (
-                <span className="font-medium text-sm text-[#E3E8ED] ml-1">
+                <span className="font-medium text-lg text-[#E3E8ED] ml-1">
                   {field.unit}
                 </span>
               )}
