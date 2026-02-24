@@ -1,9 +1,8 @@
-import { useMemo, useState, type HtmlHTMLAttributes } from 'react';
+import { useMemo, useState, } from 'react';
 import type { DateRangeKey, UsagePoint } from '../utils/timeSeries';
 import {
   formatDayLabel,
   formatMonthLabel,
-  groupIntoWeeks,
   groupIntoMonths,
 } from '../utils/timeSeries';
 

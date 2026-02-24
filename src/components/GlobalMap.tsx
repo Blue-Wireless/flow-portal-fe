@@ -4,7 +4,6 @@ import {
   TileLayer,
   Marker,
   Popup,
-  CircleMarker,
   useMap,
 } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -113,7 +112,7 @@ const GlobalMap = ({ terminals }: Props) => {
         </span>
       </div>
 
-      <div className="mt-4 h-[222px] w-full overflow-hidden">
+      <div className="mt-4 h-55.5 w-full overflow-hidden">
         <MapContainer
           center={[20, 0]}
           zoom={2}
@@ -123,7 +122,7 @@ const GlobalMap = ({ terminals }: Props) => {
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <FitBounds terminals={terminals} />
-          {terminals.map((t) => {
+          {terminals.map(() => {
             return (
               <MarkerClusterGroup
                 chunkedLoading

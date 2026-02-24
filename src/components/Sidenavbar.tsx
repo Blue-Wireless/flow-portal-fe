@@ -87,7 +87,7 @@ const NavItem = ({ icon: Icon, label, to, end, disabled }: NavItemConfig) => {
         className="flex items-center gap-2 rounded px-3 py-2 text-base text-[#B9C1CB] cursor-not-allowed"
         aria-disabled="true"
       >
-        <Icon className="w-5 h-5 opacity-60 [&_*]:fill-[#B9C1CB]" />
+        <Icon className="w-5 h-5 opacity-60 **:fill-[#B9C1CB]" />
         <span>{label}</span>
       </span>
     );
