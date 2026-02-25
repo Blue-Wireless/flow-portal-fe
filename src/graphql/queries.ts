@@ -15,3 +15,23 @@ export const OVERVIEW_QUERY = gql`
     }
   }
 `;
+
+export const MANAGED_SERVICE_BY_BWID_QUERY = gql`
+  query ManagedServiceByBwid($bwid: String!) {
+    managedServiceByBwid(bwid: $bwid) {
+      bwid
+      localSite { country name }
+      satellites {
+        terminals { dishSerialNumber kitSerialNumber serviceLineNumber userTerminalId }
+        usage {
+          currentMonth {
+            dailyUsage { date usageGB }
+            startDate endDate serviceLineNumber totalUsageGB updatedAt
+          }
+          previousMonth { startDate endDate serviceLineNumber totalUsageGB }
+        }
+      }
+      status
+    }
+  }
+`;

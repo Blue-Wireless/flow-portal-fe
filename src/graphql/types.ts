@@ -22,8 +22,8 @@ export type DeviceNode = {
   location: string;
   terminalId?: string; // link device -> terminal if you want
   status: DeviceStatus;
-  lastSeenAt: string;
-  signalPct: number;
+  lastSeen: string;
+  signal: number;
 };
 
 export type UsagePointNode = {

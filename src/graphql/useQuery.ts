@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { apolloMockClient } from "./apolloMockClient";
+// Mock useQuery hook to imitate apollo
+
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { apolloMockClient } from './apolloMockClient';
 
 type UseQueryResult<TData> = {
   data: TData | undefined;
