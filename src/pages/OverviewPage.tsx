@@ -6,199 +6,67 @@ import DashboardFilter, {
 } from '../components/DashboardFilter';
 import StatisticCard from '../components/StatisticCard';
 
-import calenderIcon from '../assets/calendar.svg';
-import globeIcon from '../assets/globe.svg';
-import satelliteIcon from '../assets/satellite.svg';
-import usersIcon from '../assets/users.svg';
-
-import customersBgImg from '../assets/bg-users.svg';
-import devicesBgImg from '../assets/bg-laptop-mobile.svg';
-import networkBgImg from '../assets/bg-wifi.svg';
-import GlobalMap, { type Terminal } from '../components/GlobalMap';
+import GlobalMap from '../components/GlobalMap';
 import DataUsageBarChart from '../components/DataUsageBarChart';
-import { buildDailyMockSeries, type DateRangeKey } from '../utils/timeSeries';
+import RecentActivityTable from '../components/RecentActivityTable';
 
-type FiltersState = {
-  dateRange: string;
-  customers: string;
-  partners: string;
-  countries: string;
-};
+import type {
+  OverviewFilters,
+  OverviewQueryResult,
+  DateRangeKey,
+} from '../graphql/types';
+import { useQuery } from '../graphql/useQuery';
+import { OVERVIEW_QUERY } from '../graphql/queries';
 
-const initialFilters: FiltersState = {
+const initialFilters: OverviewFilters = {
   dateRange: '6M',
   customers: 'All',
   partners: 'All',
   countries: 'All',
 };
 
-type StatCardConfig = {
-  title: string;
-  image: string;
-  fields: [
-    { label: string; value: string | number; unit?: string },
-    { label: string; value: string | number; unit?: string },
-    { label: string; value: string | number; unit?: string },
-  ];
-};
-
-const statCards: StatCardConfig[] = [
-  {
-    title: 'Customers',
-    image: customersBgImg,
-    fields: [
-      { label: 'Total', value: 60 },
-      { label: 'Active', value: 52 },
-      { label: 'Avg devices/ customer', value: 15.2, unit: 'Mbps' },
-    ],
-  },
-  {
-    title: 'Devices',
-    image: devicesBgImg,
-    fields: [
-      { label: 'Total', value: 112 },
-      { label: 'Online', value: 95 },
-      { label: 'Offline', value: 30 },
-    ],
-  },
-  {
-    title: 'Network health',
-    image: networkBgImg,
-    fields: [
-      { label: 'Uptime', value: 67, unit: '%' },
-      { label: 'Avg signal strength', value: 60, unit: '%' },
-      { label: 'Issues resolved', value: 99.8, unit: '%' },
-    ],
-  },
-];
-
-const buildFilterConfigs = (filters: FiltersState): FilterConfig[] => [
-  {
-    id: 'dateRange',
-    label: 'Date Range',
-    value: filters.dateRange,
-    options: [
-      { label: '7 days', value: '7D' },
-      { label: '30 days', value: '30D' },
-      { label: '3 months', value: '3M' },
-      { label: '6 months', value: '6M' },
-      { label: '12 months', value: '12M' },
-    ],
-    icon: calenderIcon,
-  },
-  {
-    id: 'customers',
-    label: 'Customers',
-    value: filters.customers,
-    options: [{ label: 'All customers', value: 'All' }],
-    icon: usersIcon,
-  },
-  {
-    id: 'partners',
-    label: 'Partners',
-    value: filters.partners,
-    options: [{ label: 'All partners', value: 'All' }],
-    icon: satelliteIcon,
-  },
-  {
-    id: 'countries',
-    label: 'Countries',
-    value: filters.countries,
-    options: [
-      { label: 'All countries', value: 'All' },
-      { label: 'United States', value: 'US' },
-      { label: 'United Kingdom', value: 'UK' },
-      { label: 'Canada', value: 'CA' },
-      { label: 'Australia', value: 'AU' },
-    ],
-    icon: globeIcon,
-  },
-];
-
-const terminals: Terminal[] = [
-  {
-    id: 'syd',
-    name: 'Sydney',
-    latitude: -33.8688,
-    longitude: 151.2093,
-    status: 'online',
-  },
-  {
-    id: 'mel',
-    name: 'Melbourne',
-    latitude: -37.8136,
-    longitude: 144.9631,
-    status: 'offline',
-  },
-  {
-    id: 'bne',
-    name: 'Brisbane',
-    latitude: -27.4698,
-    longitude: 153.0251,
-    status: 'online',
-  },
-  {
-    id: 'per',
-    name: 'Perth',
-    latitude: -31.9505,
-    longitude: 115.8605,
-    status: 'online',
-  },
-  {
-    id: 'adl',
-    name: 'Adelaide',
-    latitude: -34.9285,
-    longitude: 138.6007,
-    status: 'offline',
-  },
-  {
-    id: 'cbr',
-    name: 'Canberra',
-    latitude: -35.2809,
-    longitude: 149.13,
-    status: 'online',
-  },
-  {
-    id: 'drw',
-    name: 'Darwin',
-    latitude: -12.4634,
-    longitude: 130.8456,
-    status: 'offline',
-  },
-  {
-    id: 'hob',
-    name: 'Hobart',
-    latitude: -42.8821,
-    longitude: 147.3272,
-    status: 'online',
-  },
-];
-
 const OverviewPage = () => {
-  const [filters, setFilters] = useState<FiltersState>(initialFilters);
+  const [filters, setFilters] = useState<OverviewFilters>(initialFilters);
 
-  const filterConfigs = useMemo(() => buildFilterConfigs(filters), [filters]);
+  const variables = useMemo(() => ({ filters }), [filters]);
+
+  const { data, loading, error } = useQuery<
+    OverviewQueryResult,
+    typeof variables
+  >({
+    query: OVERVIEW_QUERY,
+    variables,
+  });
 
   const handleFilterChange = (id: string, value: string) => {
     setFilters((prev) => ({ ...prev, [id]: value }));
   };
 
   const range = filters.dateRange as DateRangeKey;
-  // For now: generate daily mock points depending on selected range
-  const dailyPoints = useMemo(() => {
-    const daily =
-      range === '7D'
-        ? buildDailyMockSeries(7)
-        : range === '30D'
-          ? buildDailyMockSeries(30)
-          : range === '3M'
-            ? buildDailyMockSeries(90)
-            : range === '6M'
-              ? buildDailyMockSeries(180)
-              : buildDailyMockSeries(365);
-    console.log('here', range, daily);
-    return daily;
-  }, [range]);
+
+  const filterConfigs: FilterConfig[] = useMemo(() => {
+    const meta = data?.overview.meta.filters ?? [];
+    return meta.map((m) => ({
+      id: m.id,
+      label: m.label,
+      value: filters[m.id],
+      options: m.options,
+      icon: m.icon,
+    }));
+  }, [data, filters]);
+
+  const statCards = data?.overview.meta.statCards ?? [];
+  const terminals = data?.overview.terminals.edges.map((e) => e.node) ?? [];
+  const points = data?.overview.usage.edges.map((e) => e.node) ?? [];
+  const devices = data?.overview.devices.edges.map((e) => e.node) ?? [];
+
+  if (error) {
+    return (
+      <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-700">
+        Failed to load overview data: {error.message}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -244,15 +112,23 @@ const OverviewPage = () => {
         </div>
         <div className="border-r border-[#B9C1CB]" />
 
-        <div className='w-xl'>
+        <div className="w-xl">
           <h1 className="text-3xl font-semibold text-slate-900 mb-4">
             Data usage
           </h1>
-          <DataUsageBarChart range={range} points={dailyPoints} />
+          <DataUsageBarChart range={range} points={points} />
         </div>
       </div>
 
       <div className="border-b border-[#B9C1CB]" />
+
+      {/* Recent Device Activity */}
+      <div>
+        <h1 className="text-3xl font-semibold text-slate-900 mb-4">
+          Recent Device Activity
+        </h1>
+        <RecentActivityTable data={devices} />
+      </div>
     </div>
   );
 };
