@@ -1,30 +1,18 @@
 import { useEffect, useMemo } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import ActiveIcon from '../assets/green-circle.svg?react';
 import InactiveIcon from '../assets/red-circle.svg?react';
 import L from 'leaflet';
+import type { TerminalNode } from '../graphql/types';
 
 type terminalStatus = 'online' | 'offline';
-export type Terminal = {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  status?: terminalStatus;
-};
 
 type Props = {
-  terminals: Terminal[];
+  terminals: TerminalNode[];
 };
 
-const FitBounds = ({ terminals }: { terminals: Terminal[] }) => {
+const FitBounds = ({ terminals }: { terminals: TerminalNode[] }) => {
   const map = useMap();
   useEffect(() => {
     if (!terminals.length) return;
@@ -38,7 +26,7 @@ const FitBounds = ({ terminals }: { terminals: Terminal[] }) => {
   return null;
 };
 
-const getCounts = (terminals: Terminal[]) => {
+const getCounts = (terminals: TerminalNode[]) => {
   const online = terminals.filter((t) => t.status === 'online').length;
   const offline = terminals.filter((t) => t.status === 'offline').length;
   return { total: terminals.length, online, offline };

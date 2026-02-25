@@ -107,7 +107,7 @@ const NavItem = ({ icon: Icon, label, to, end, disabled }: NavItemConfig) => {
 
 const Sidenavbar = () => {
   return (
-    <aside className="w-68 p-1 border-r bg-[#1580D4] text-white flex flex-col">
+    <aside className="ww-68 p-1 shrink-0 border-r bg-[#1580D4] text-white flex flex-col h-dvh sticky top-0">
       {/* Logo */}
       <div className="h-24 flex items-center justify-center">
         <img src={bwLogo} alt="BlueWireless Logo" className="h-16 w-auto" />
@@ -116,7 +116,7 @@ const Sidenavbar = () => {
       <div className="mx-1 border-b border-[#B9C1CB]" />
 
       {/* Top nav */}
-      <nav className="p-1 space-y-3 flex-1">
+      <nav className="p-1 space-y-3 flex-1 overflow-y-auto">
         {topSections.map((section) => (
           <div key={section.title}>
             <div className="mb-2 mt-2 px-3 text-[#B9C1CB] text-xs uppercase tracking-wide">
