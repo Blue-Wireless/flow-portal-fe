@@ -1,8 +1,4 @@
-import type { OverviewQueryResult, OverviewQueryVariables } from './types';
-import type {
-  ManagedServiceByBwidQueryResult,
-  ManagedServiceByBwidQueryVariables,
-} from './managedServiceTypes';
+
 import { managedServiceByBwidMock } from './mockManagedServiceData';
 import { queryOverview } from './mockClient';
 
