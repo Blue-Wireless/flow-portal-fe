@@ -1,22 +1,22 @@
 import { useMemo, useState } from 'react';
 
-import Searchbar from '../components/Searchbar';
+import Searchbar from '../../components/Searchbar';
 import DashboardFilter, {
   type FilterConfig,
-} from '../components/DashboardFilter';
-import StatisticCard from '../components/StatisticCard';
+} from '../../components/DashboardFilter';
+import StatisticCard from '../../components/StatisticCard';
 
-import GlobalMap from '../components/GlobalMap';
-import DataUsageBarChart from '../components/DataUsageBarChart';
-import RecentActivityTable from '../components/RecentActivityTable';
+import GlobalMap from '../../components/GlobalMap';
+import DataUsageBarChart from '../../components/DataUsageBarChart';
+import RecentActivityTable from '../../components/RecentActivityTable';
 
 import type {
   OverviewFilters,
   OverviewQueryResult,
   DateRangeKey,
-} from '../graphql/types';
-import { useQuery } from '../graphql/useQuery';
-import { OVERVIEW_QUERY } from '../graphql/queries';
+} from '../../graphql/types';
+import { useQuery } from '../../graphql/useQuery';
+import { OVERVIEW_QUERY } from '../../graphql/queries';
 
 const initialFilters: OverviewFilters = {
   dateRange: '6M',

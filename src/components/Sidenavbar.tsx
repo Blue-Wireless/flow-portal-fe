@@ -32,11 +32,11 @@ const topSections: NavSection[] = [
   {
     title: 'Manage',
     items: [
-      { icon: OverviewIcon, label: 'Overview', to: '/app', end: true },
+      { icon: OverviewIcon, label: 'Overview', to: '/app/overview', end: true },
       {
         icon: DeviceMgtIcon,
         label: 'Device management',
-        to: '/app/device-management',
+        to: '/app/device-management/partners',
       },
     ],
   },
